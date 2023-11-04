@@ -3,8 +3,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
+import { useAuthContext } from '../provider/AuthProvider';
 
 const Login = () => {
+    const { createUser, updateUserProfile, googleSignIn } = useAuthContext()
 
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')

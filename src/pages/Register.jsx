@@ -4,9 +4,10 @@ import { FaArrowLeft, FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2'
+import { useAuthContext } from '../provider/AuthProvider';
 
 const Register = () => {
-
+    const { createUser, updateUserProfile, googleSignIn } = useAuthContext()
     const [error, setError] = useState('')
     const navigate = useNavigate()
     const location = useLocation()
