@@ -12,6 +12,7 @@ const Register = () => {
     const navigate = useNavigate()
     const location = useLocation()
 
+    // React Hook Form 
     const from = location.state?.from?.pathname || "/"
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const onSubmit = data => {
@@ -45,16 +46,43 @@ const Register = () => {
                                 }
                                 navigate(from, { replace: true })
                             })
-
-
                     })
                     .catch(error => setError(error.message))
             })
             .catch(error => setError(error.message))
     };
 
+
+    // Sign in with Google
     const handleLoginWithGoogle = () => {
 
+        googleSignIn()
+            .then(result => {
+                const loggedUser = result.user
+                const saveUser = { name: loggedUser.displayName, email: loggedUser.email }
+                fetch('http://127.0.0.1:5000/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(saveUser)
+                })
+                    .then(res => res.json())
+                    .then(() => {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'User Login Successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        navigate(from, { replace: true })
+                    })
+            })
+
+            .catch(error => {
+                setError(error.message)
+            })
     }
 
     return (

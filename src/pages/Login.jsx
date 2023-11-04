@@ -18,6 +18,7 @@ const Login = () => {
 
     const from = location.state?.from?.pathname || "/"
 
+    // Sign in with Email and Password 
     const handleLogin = (event) => {
         event.preventDefault()
         const form = event.target;
@@ -43,8 +44,36 @@ const Login = () => {
     }
 
 
+    // Sign in with Google
     const handleLoginWithGoogle = () => {
 
+        googleSignIn()
+            .then(result => {
+                const loggedUser = result.user
+                const saveUser = { name: loggedUser.displayName, email: loggedUser.email }
+                fetch('http://127.0.0.1:5000/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(saveUser)
+                })
+                    .then(res => res.json())
+                    .then(() => {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'User Login Successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        navigate(from, { replace: true })
+                    })
+            })
+
+            .catch(error => {
+                setError(error.message)
+            })
     }
 
     const handleResetPassword = () => {
