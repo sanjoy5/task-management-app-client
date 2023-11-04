@@ -25,7 +25,7 @@ const AddTask = () => {
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
-                        title: 'Addmission was Successfull',
+                        title: 'Task Added Successfully',
                         showConfirmButton: false,
                         timer: 1500,
                     })
