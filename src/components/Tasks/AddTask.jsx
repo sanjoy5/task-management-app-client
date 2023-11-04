@@ -8,6 +8,10 @@ import { Link, useNavigate } from "react-router-dom";
 const AddTask = () => {
     const { user } = useAuthContext()
     const navigate = useNavigate()
+    const token = localStorage.getItem('access-token')
+    // console.log(token, 'toekn');
+
+    // React Hook Form 
     const { register, reset, handleSubmit, formState: { errors } } = useForm();
     const [, , refetch] = useTasks()
     const onSubmit = data => {
@@ -19,7 +23,8 @@ const AddTask = () => {
             fetch(`http://127.0.0.1:5000/add-task/${user.email}`, {
                 method: 'POST',
                 headers: {
-                    'content-type': 'application/json'
+                    'content-type': 'application/json',
+                    authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify(newTasks)
             })
