@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+
 import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2'
 import { useTasks } from '../../hooks/useTasks';
 
 const AddTask = () => {
-    const [error, setError] = useState('')
+
     const { register, reset, handleSubmit, formState: { errors } } = useForm();
     const [, , refetch] = useTasks()
     const onSubmit = data => {
