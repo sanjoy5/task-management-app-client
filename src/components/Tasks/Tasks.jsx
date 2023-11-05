@@ -5,21 +5,20 @@ import { useAuthContext } from '../../provider/AuthProvider';
 import Loading from '../Loading';
 import Swal from 'sweetalert2';
 import useMyTask from '../../hooks/useMyTask';
-import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { Link } from 'react-router-dom';
 
 
 const Tasks = () => {
 
     const { user } = useAuthContext()
-    const [tasks] = useTasks()
     const [sortOrder, setSortOrder] = useState('asc')
-    const [myTask, setMyTask] = useState([])
     const token = localStorage.getItem('access-token')
 
 
     // For Geting data securely i used custom hook
-    const [axiosSecure] = useAxiosSecure()
+
     const [myTasks, isMyTaskLoading, refetch] = useMyTask()
+    console.log(myTasks, "%%%%");
 
     // this is the normal way to get data 
 
@@ -78,8 +77,14 @@ const Tasks = () => {
     return (
         <>
 
+            {isMyTaskLoading && <Loading />}
+
             {
-                isMyTaskLoading ? <Loading />
+                !myTasks ?
+                    <div className="bg-white shadow p-8 rounded lg:mt-6">
+                        <h2 className='text-2xl font-medium uppercase text-red-500'>There is no tasks available !!!</h2>
+                    </div>
+
                     : <>
                         <div className="bg-white shadow p-8 rounded lg:mt-6">
                             {
@@ -97,9 +102,9 @@ const Tasks = () => {
                                                         </div>
 
                                                         <div className="flex gap-2 items-center justify-center">
-                                                            <div className="p-3 rounded-full w-fit cursor-pointer bg-gray-200 hover:bg-gray-300">
+                                                            <Link to={`/updatetask/${task?._id}`} className="p-3 rounded-full w-fit cursor-pointer bg-gray-200 hover:bg-gray-300">
                                                                 <FaPen className='text-lg text-green-500' />
-                                                            </div>
+                                                            </Link>
                                                             <div onClick={() => handleDelete(task?._id)} className="p-3 rounded-full w-fit cursor-pointer bg-gray-200 hover:bg-gray-300">
                                                                 <FaTrash className='text-lg text-red-500' />
                                                             </div>
@@ -108,18 +113,12 @@ const Tasks = () => {
                                                 </div>
                                             ))
                                         }
-
                                     </>
-
-
                             }
                         </div>
                     </>
+
             }
-
-
-
-
         </>
     );
 };

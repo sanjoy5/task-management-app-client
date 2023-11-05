@@ -90,7 +90,7 @@ const AddTask = () => {
 
     }
     return (
-        <div>
+        <>
             <form onSubmit={handleSubmit(onSubmit)} className="bg-white rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 relative z-10 shadow-md">
                 <h2 className="text-gray-900 text-xl mb-4 font-medium title-font text-center">Add Tasks</h2>
 
@@ -110,7 +110,7 @@ const AddTask = () => {
                 </div>
                 <button type='submit' className="text-white bg-slate-800 border-0 py-2 px-6 focus:outline-none hover:bg-slate-900 rounded text-lg">Add Task</button>
             </form>
-        </div>
+        </>
     );
 };
 
