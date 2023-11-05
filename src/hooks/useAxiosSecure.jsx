@@ -6,7 +6,7 @@ import { useAuthContext } from '../provider/AuthProvider';
 
 
 const axiosSecure = axios.create({
-    baseURL: 'https://task-management-app-server-eight.vercel.app',
+    baseURL: 'http://127.0.0.1:5000',
 });
 
 

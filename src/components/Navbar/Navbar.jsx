@@ -26,6 +26,9 @@ const Navbar = () => {
             <Link className='text-white font-bold text-xl' to={'/'}>TaskApp</Link>
             {
                 user ? <>
+                    {/* <div className="">
+                        <Link className='bg-white py-2 px-4 rounded font-semibold mr-2' to={'/mytasks'}>MyTasks</Link>
+                    </div> */}
                     <div className="">
                         <div onClick={handleLogout} className='bg-white py-2 px-4 rounded font-semibold ml-2 cursor-pointer'>Logout</div>
                     </div>

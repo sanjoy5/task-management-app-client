@@ -23,13 +23,12 @@ const Login = () => {
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(email, password);
+        // console.log(email, password);
         signIn(email, password)
             .then(result => {
                 const user = result.user
-
                 Swal.fire({
-                    position: 'top-end',
+                    position: 'center-center',
                     icon: 'success',
                     title: 'User Login Successfully',
                     showConfirmButton: false,
@@ -50,7 +49,7 @@ const Login = () => {
             .then(result => {
                 const loggedUser = result.user
                 const saveUser = { name: loggedUser.displayName, email: loggedUser.email }
-                fetch('https://task-management-app-server-eight.vercel.app/users', {
+                fetch('http://127.0.0.1:5000/users', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
@@ -93,12 +92,12 @@ const Login = () => {
                     }
 
                     <div className="relative mb-4">
-                        <label for="email" className="leading-7 text-sm text-gray-600">Email</label>
+                        <label htmlFor="email" className="leading-7 text-sm text-gray-600">Email</label>
                         <input type="email" id="email" ref={emailRef} name='email' className="w-full bg-white rounded border border-gray-300 focus:border-[#2D2D39] focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required />
 
                     </div>
                     <div className="relative mb-4">
-                        <label for="password" className="leading-7 text-sm text-gray-600">Password</label>
+                        <label htmlFor="password" className="leading-7 text-sm text-gray-600">Password</label>
                         <input id="password" name='password' className="w-full bg-white rounded border border-gray-300 focus:border-[#2D2D39] focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" type={show ? 'text' : 'password'} required />
                         {
                             show ? <BsEyeSlash onClick={() => setShow(!show)} className=" absolute top-9 right-3 text-lg cursor-pointer" />

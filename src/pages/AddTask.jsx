@@ -1,9 +1,10 @@
-
 import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2'
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../provider/AuthProvider";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+
+
 
 
 const AddTask = () => {
@@ -26,7 +27,7 @@ const AddTask = () => {
 
             // normal way to post a data -------->
 
-            // fetch(`https://task-management-app-server-eight.vercel.app/add-task/${user.email}`, {
+            // fetch(`http://127.0.0.1:5000/add-task/${user.email}`, {
             //     method: 'POST',
             //     headers: {
             //         'content-type': 'application/json',
@@ -91,7 +92,7 @@ const AddTask = () => {
                 <h2 className="text-gray-900 text-xl mb-4 font-medium title-font text-center">Add Tasks</h2>
 
                 {
-                    !user && <p className="pb-4 text-center text-amber-500">Warning: You have to <Link to="/login" className="text-blue-500 underline">Login</Link> first for Add a Task.</p>
+                    !user && <p className="pb-4 text-center text-amber-500">Warning: Please <Link to="/login" className="text-blue-500 underline">Login</Link> for Task Management Functionality.</p>
                 }
 
                 <div className="relative mb-4">

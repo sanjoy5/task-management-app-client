@@ -1,6 +1,6 @@
 import React from 'react';
 import Tasks from '../components/Tasks/Tasks';
-import AddTask from '../components/Tasks/AddTask';
+import AddTask from './AddTask';
 import { useAuthContext } from '../provider/AuthProvider';
 import { Link } from 'react-router-dom';
 
@@ -18,11 +18,13 @@ const Home = () => {
 
                 </div>
                 <Link className='bg-slate-800 hover:bg-slate-900 text-white text-center py-2 px-4 rounded font-semibold' to={'/addtask'}>Add Task</Link>
-                <Tasks />
 
                 {
-                    !user && <p className="pt-4 text-center text-amber-500">Warning: You have to <Link to="/login" className="text-blue-500 underline">Login</Link> first for Add a Task.</p>
+                    !user && <p className="text-center text-amber-500 text-xl">Warning: You have to <Link to="/login" className="text-blue-500 underline">Login</Link> first for Add a Task.</p>
                 }
+
+                <Tasks />
+
 
             </div>
 

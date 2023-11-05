@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 // import useMyTask from '../../hooks/useMyTask';
 import MyTasks from './MyTasks';
 import { useTasks } from '../../hooks/useTasks';
+import Loading from '../Loading';
 
 
 const Tasks = () => {
@@ -16,6 +17,7 @@ const Tasks = () => {
     const [myTasks, setMyTasks] = useState([])
     const [searchText, setSearchText] = useState('')
     const [showBtn, setShowBtn] = useState(false)
+    const [loading, setLoading] = useState(true)
 
 
 
@@ -28,7 +30,7 @@ const Tasks = () => {
 
     useEffect(() => {
         if (user) {
-            fetch(`https://task-management-app-server-eight.vercel.app/tasks/${user?.email}?sortdata=${sortOrder}`, {
+            fetch(`http://127.0.0.1:5000/mytasks/${user?.email}?sortdata=${sortOrder}`, {
                 headers: {
                     authorization: `Bearer ${token}`
                 }
@@ -36,6 +38,7 @@ const Tasks = () => {
                 .then(res => res.json())
                 .then(data => {
                     setMyTasks(data);
+                    setLoading(false)
                 })
         } else {
             setMyTasks(null)
@@ -56,7 +59,7 @@ const Tasks = () => {
             })
             return;
         }
-        fetch(`https://task-management-app-server-eight.vercel.app/my-task-search/${searchText}?email=${user?.email}&sortOrder=${sortOrder}`, {
+        fetch(`http://127.0.0.1:5000/my-task-search/${searchText}?email=${user?.email}&sortOrder=${sortOrder}`, {
             headers: {
                 authorization: `Bearer ${token}`
             }
@@ -74,7 +77,7 @@ const Tasks = () => {
     // For show all data 
 
     const showAll = () => {
-        fetch(`https://task-management-app-server-eight.vercel.app/mytasks/${user?.email}`)
+        fetch(`http://127.0.0.1:5000/mytasks/${user?.email}?sortdata=${sortOrder}`)
             .then(res => res.json())
             .then(data => {
                 setMyTasks(data);
@@ -99,7 +102,7 @@ const Tasks = () => {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                fetch(`https://task-management-app-server-eight.vercel.app/delete-task/${_id}`, {
+                fetch(`http://127.0.0.1:5000/delete-task/${_id}`, {
                     method: 'DELETE',
                     headers: {
                         authorization: `Bearer ${token}`
@@ -138,43 +141,49 @@ const Tasks = () => {
 
                     : <>
                         <div className="bg-white shadow p-8 rounded ">
-                            {
-                                myTasks?.length === 0 ?
-                                    <h2 className='text-2xl font-medium uppercase text-red-500'>There is no tasks available !!!</h2>
-                                    :
-                                    <>
-                                        {/* --------- Query Form ----------- */}
 
-                                        <div className="flex gap-4 flex-wrap items-center justify-between w-full mb-5">
+                            {loading ? <Loading /> :
+                                <>
+                                    {
+                                        myTasks?.length === 0 ?
+                                            <h2 className='text-2xl font-medium uppercase text-red-500'>There is no tasks available !!!</h2>
+                                            :
+                                            <>
+                                                {/* --------- Query Form ----------- */}
 
-                                            <div className='w-ful md:w-3/4 flex items-center gap-2'>
-                                                <div className="w-full max-w-md flex items-center gap-2">
-                                                    <input onChange={(e) => setSearchText(e.target.value)} type="search" name="search" className="w-full bg-white rounded border-2 border-gray-300 focus:slate-blue-800 focus:ring-2 focus:ring-slate-800 text-base outline-none text-gray-700  px-3 leading-8 transition-colors duration-200 ease-in-out" />
-                                                    <button onClick={handleSearch} className="text-white bg-slate-800 border-0 py-1.5 px-3 md:px-6 focus:outline-none hover:bg-slate-900 rounded">Search</button>
+                                                <div className="flex gap-4 flex-wrap items-center justify-between w-full mb-5">
+
+                                                    <div className='w-ful md:w-3/4 flex items-center gap-2'>
+                                                        <div className="w-full max-w-md flex items-center gap-2">
+                                                            <input onChange={(e) => setSearchText(e.target.value)} type="search" name="search" className="w-full bg-white rounded border-2 border-gray-300 focus:slate-blue-800 focus:ring-2 focus:ring-slate-800 text-base outline-none text-gray-700  px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                                                            <button onClick={handleSearch} className="text-white bg-slate-800 border-0 py-1.5 px-3 md:px-6 focus:outline-none hover:bg-slate-900 rounded">Search</button>
+                                                        </div>
+                                                        {showBtn &&
+                                                            <button onClick={showAll} className="text-white bg-slate-800 border-0 py-1.5 px-4 focus:outline-none hover:bg-slate-900 rounded">All</button>
+                                                        }
+
+                                                    </div>
+
+
+                                                    <select onChange={(e) => setSortOrder(e.target.value)} name="filter" className='border py-1.5 px-3 rounded outline-none text-gray-800 font-medium'>
+                                                        <option value="asc">Asc</option>
+                                                        <option value="dsc">Dsc</option>
+                                                    </select>
+
                                                 </div>
-                                                {showBtn &&
-                                                    <button onClick={showAll} className="text-white bg-slate-800 border-0 py-1.5 px-4 focus:outline-none hover:bg-slate-900 rounded">All</button>
+
+
+                                                {/* ---------- All Tasks ------------ */}
+
+                                                {
+                                                    myTasks?.map(task => (
+                                                        <MyTasks task={task} key={task._id} handleDelete={handleDelete} />
+                                                    ))
                                                 }
+                                            </>
+                                    }
+                                </>
 
-                                            </div>
-
-
-                                            <select onChange={(e) => setSortOrder(e.target.value)} name="filter" className='border py-1.5 px-3 rounded outline-none text-gray-800 font-medium'>
-                                                <option value="asc">Asc</option>
-                                                <option value="dsc">Dsc</option>
-                                            </select>
-
-                                        </div>
-
-
-                                        {/* ---------- All Tasks ------------ */}
-
-                                        {
-                                            myTasks?.map(task => (
-                                                <MyTasks task={task} key={task._id} handleDelete={handleDelete} />
-                                            ))
-                                        }
-                                    </>
                             }
                         </div>
                     </>

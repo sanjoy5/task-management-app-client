@@ -25,7 +25,7 @@ const Register = () => {
                     .then(() => {
                         const saveUser = { name: data.name, email: data.email }
 
-                        fetch('https://task-management-app-server-eight.vercel.app/users', {
+                        fetch('http://127.0.0.1:5000/users', {
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json'
@@ -60,7 +60,7 @@ const Register = () => {
             .then(result => {
                 const loggedUser = result.user
                 const saveUser = { name: loggedUser.displayName, email: loggedUser.email }
-                fetch('https://task-management-app-server-eight.vercel.app/users', {
+                fetch('http://127.0.0.1:5000/users', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
@@ -101,19 +101,19 @@ const Register = () => {
                         }
 
                         <div class="relative mb-4">
-                            <label for="name" class="leading-7 text-sm text-gray-600">Name</label>
+                            <label htmlFor="name" class="leading-7 text-sm text-gray-600">Name</label>
                             <input type="text" id="name" {...register("name", { required: true })} class="w-full bg-white rounded border border-gray-300 focus:border-[#2D2D39] focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                             {errors.name && <span className='text-red-500 '>Name field is required</span>}
                         </div>
 
                         <div class="relative mb-4">
-                            <label for="email" class="leading-7 text-sm text-gray-600">Email</label>
+                            <label htmlFor="email" class="leading-7 text-sm text-gray-600">Email</label>
                             <input type="email" id="email" {...register("email", { required: true })} class="w-full bg-white rounded border border-gray-300 focus:border-[#2D2D39] focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                             {errors.email && <span className='text-red-500 '>Email field is required</span>}
                         </div>
 
                         <div class="relative mb-4">
-                            <label for="password" class="leading-7 text-sm text-gray-600">Password</label>
+                            <label htmlFor="password" class="leading-7 text-sm text-gray-600">Password</label>
                             <input type="password" id="password" {...register("password", {
                                 required: true,
                                 minLength: 6,
