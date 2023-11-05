@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { useAuthContext } from '../../provider/AuthProvider';
 import Loading from '../Loading';
 import Swal from 'sweetalert2';
+import useMyTask from '../../hooks/useMyTask';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 
 const Tasks = () => {
@@ -11,24 +13,28 @@ const Tasks = () => {
     const { user } = useAuthContext()
     const [tasks] = useTasks()
     const [sortOrder, setSortOrder] = useState('asc')
-    const [loading, setLoading] = useState(true)
-
-    const [myTasks, setMyTasks] = useState([])
+    const [myTask, setMyTask] = useState([])
     const token = localStorage.getItem('access-token')
-    // console.log(token, 'toekn');
 
-    useEffect(() => {
-        fetch(`http://127.0.0.1:5000/tasks/${user?.email}?sortOrder=${sortOrder}`, {
-            headers: {
-                authorization: `Bearer ${token}`
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                setMyTasks(data);
-                setLoading(false)
-            })
-    }, [user, tasks])
+
+    // For Geting data securely i used custom hook
+    const [axiosSecure] = useAxiosSecure()
+    const [myTasks, isMyTaskLoading, refetch] = useMyTask()
+
+    // this is the normal way to get data 
+
+    // useEffect(() => {
+    //     fetch(`http://127.0.0.1:5000/tasks/${user?.email}?sortOrder=${sortOrder}`, {
+    //         headers: {
+    //             authorization: `Bearer ${token}`
+    //         }
+    //     })
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             setMyTasks(data);
+    //             setLoading(false)
+    //         })
+    // }, [user, tasks])
 
 
     // Delete Task 
@@ -59,8 +65,7 @@ const Tasks = () => {
                                 'Your file has been deleted.',
                                 'success'
                             )
-                            const remaining = myTasks?.filter(task => task._id !== _id)
-                            setMyTasks(remaining)
+                            refetch()
                         }
                     })
 
@@ -74,7 +79,7 @@ const Tasks = () => {
         <>
 
             {
-                loading ? <Loading />
+                isMyTaskLoading ? <Loading />
                     : <>
                         <div className="bg-white shadow p-8 rounded lg:mt-6">
                             {
@@ -87,7 +92,7 @@ const Tasks = () => {
                                                 <div className="border-b py-3 last:border-b-0" key={task._id}>
                                                     <div className="grid grid-cols-5 gap-5">
                                                         <div className="col-span-4">
-                                                            <h2 className="text-xl font-medium uppercase text-slate-800">{task?.title}</h2>
+                                                            <h2 className="text-xl font-medium  text-slate-800">{task?.title}</h2>
                                                             <p className=" text-gray-600 mt-2">{task?.description}</p>
                                                         </div>
 

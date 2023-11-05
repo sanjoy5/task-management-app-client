@@ -4,45 +4,73 @@ import Swal from 'sweetalert2'
 import { useTasks } from '../../hooks/useTasks';
 import { useAuthContext } from "../../provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useMyTask from "../../hooks/useMyTask";
 
 const AddTask = () => {
     const { user } = useAuthContext()
     const navigate = useNavigate()
-    const token = localStorage.getItem('access-token')
+
+    // const token = localStorage.getItem('access-token')
     // console.log(token, 'toekn');
+
+    // For Posting data securely i used custom hook
+    const [axiosSecure] = useAxiosSecure()
+    const [myTasks, isMyTaskLoading, refetch] = useMyTask()
 
     // React Hook Form 
     const { register, reset, handleSubmit, formState: { errors } } = useForm();
-    const [, , refetch] = useTasks()
+
     const onSubmit = data => {
         console.log(data)
 
         if (user) {
             const { title, description } = data
             const newTasks = { title, description, email: user?.email }
-            fetch(`http://127.0.0.1:5000/add-task/${user.email}`, {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json',
-                    authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify(newTasks)
-            })
-                .then(res => res.json())
-                .then(data => {
-                    // console.log('add data : ', data);
-                    if (data.insertedId) {
+
+            // normal way to post a data -------->
+
+            // fetch(`http://127.0.0.1:5000/add-task/${user.email}`, {
+            //     method: 'POST',
+            //     headers: {
+            //         'content-type': 'application/json',
+            //         authorization: `Bearer ${token}`
+            //     },
+            //     body: JSON.stringify(newTasks)
+            // })
+            //     .then(res => res.json())
+            //     .then(data => {
+            //         // console.log('add data : ', data);
+            //         if (data.insertedId) {
+            //             refetch()
+            //             Swal.fire({
+            //                 position: 'top-end',
+            //                 icon: 'success',
+            //                 title: 'Task Added Successfully',
+            //                 showConfirmButton: false,
+            //                 timer: 1500,
+            //             })
+            //         }
+            // reset()
+            // })
+
+            // Dynamic way to post a data ------- > 
+
+            axiosSecure.post(`/add-task/${user.email}`, newTasks)
+                .then(res => {
+                    if (res.data.insertedId) {
                         refetch()
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',
-                            title: 'Task Added Successfully',
+                            title: 'Task added Successfully',
                             showConfirmButton: false,
-                            timer: 1500,
+                            timer: 1500
                         })
+                        reset()
                     }
-                    reset()
                 })
+
         } else {
             Swal.fire({
                 title: 'Login Now',
