@@ -36,7 +36,7 @@ const Register = () => {
                             .then((data) => {
                                 if (data.insertedId) {
                                     Swal.fire({
-                                        position: 'top-end',
+                                        position: 'center-center',
                                         icon: 'success',
                                         title: 'User Register Successfully',
                                         showConfirmButton: false,
@@ -70,7 +70,7 @@ const Register = () => {
                     .then(res => res.json())
                     .then(() => {
                         Swal.fire({
-                            position: 'top-end',
+                            position: 'center-center',
                             icon: 'success',
                             title: 'User Login Successfully',
                             showConfirmButton: false,

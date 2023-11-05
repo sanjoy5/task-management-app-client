@@ -1,10 +1,9 @@
 
 import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2'
-import { useAuthContext } from "../../provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-
+import { useAuthContext } from "../provider/AuthProvider";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 
 const AddTask = () => {
@@ -90,6 +89,10 @@ const AddTask = () => {
         <>
             <form onSubmit={handleSubmit(onSubmit)} className="bg-white rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 relative z-10 shadow-md">
                 <h2 className="text-gray-900 text-xl mb-4 font-medium title-font text-center">Add Tasks</h2>
+
+                {
+                    !user && <p className="pb-4 text-center text-amber-500">Warning: You have to <Link to="/login" className="text-blue-500 underline">Login</Link> first for Add a Task.</p>
+                }
 
                 <div className="relative mb-4">
                     <label htmlFor="title" className="leading-7  text-gray-600">Title</label>

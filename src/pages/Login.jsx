@@ -10,7 +10,6 @@ const Login = () => {
     const { signIn, googleSignIn } = useAuthContext()
 
     const [error, setError] = useState('')
-    const [success, setSuccess] = useState('')
     const [show, setShow] = useState(false)
     const navigate = useNavigate()
     const location = useLocation()
@@ -61,7 +60,7 @@ const Login = () => {
                     .then(res => res.json())
                     .then(() => {
                         Swal.fire({
-                            position: 'top-end',
+                            position: 'center-center',
                             icon: 'success',
                             title: 'User Login Successfully',
                             showConfirmButton: false,
@@ -76,9 +75,7 @@ const Login = () => {
             })
     }
 
-    const handleResetPassword = () => {
 
-    }
 
 
     return (
@@ -89,11 +86,6 @@ const Login = () => {
                         <FaArrowLeft className='inline' />
                     </Link>
                     <h2 className="text-gray-900 text-2xl mb-1 font-bold uppercase title-font text-center">Login Now</h2>
-                    {
-                        success && <label className="label">
-                            <p className="my-2 text-green-500"><strong>Success</strong>: {success}</p>
-                        </label>
-                    }
                     {
                         error && <label className="label">
                             <p className="my-2 text-red-500"><strong>Error</strong>: {error}</p>
@@ -117,7 +109,7 @@ const Login = () => {
 
                     <button type='submit' className="text-white bg-slate-800 border-0 py-2 px-6 focus:outline-none hover:bg-slate-900 rounded text-lg">Login</button>
                     <p className="text-base text-gray-500 mt-3">New to TaskApp? <Link to='/register' className='text-blue-500'>Register</Link></p>
-                    <p onClick={handleResetPassword} className='text-blue-500 text-base cursor-pointer'>Forget Password?</p>
+
                 </form>
                 <div className="flex items-center gap-6 w-full justify-center mt-6">
                     <div onClick={handleLoginWithGoogle} className="px-5 py-3 rounded bg-white  flex items-center justify-center cursor-pointer">

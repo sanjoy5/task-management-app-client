@@ -7,6 +7,7 @@ import Register from "../pages/Register";
 import Login from "../pages/Login";
 import PrivateRoute from "./PrivateRoute";
 import UpdateTask from "../pages/UpdateTask";
+import AddTask from "../pages/AddTask";
 
 
 
@@ -18,6 +19,10 @@ export const router = createBrowserRouter([
             {
                 path: '/',
                 element: <Home />
+            },
+            {
+                path: '/addtask',
+                element: <PrivateRoute><AddTask /></PrivateRoute>,
             },
             {
                 path: '/updatetask/:id',

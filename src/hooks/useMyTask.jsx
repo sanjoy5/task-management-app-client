@@ -11,7 +11,7 @@ const useMyTask = () => {
         queryKey: ['tasks', user?.email],
         enabled: !loading,
         queryFn: async () => {
-            const res = await axiosSecure.get(`/tasks/${user?.email}`)
+            const res = await axiosSecure.get(`tasks/${user?.email}?sortdata=${sortOrder}`)
             return res.data
         }
     })
@@ -19,3 +19,4 @@ const useMyTask = () => {
 };
 
 export default useMyTask;
+// http://127.0.0.1:5000/tasks/${user?.email}?sortdata=${sortOrder}

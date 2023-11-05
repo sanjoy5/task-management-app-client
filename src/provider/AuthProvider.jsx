@@ -41,10 +41,7 @@ const AuthProvider = ({ children }) => {
         return signOut(auth)
     }
 
-    const resetPassword = (email) => {
-        setLoading(true)
-        return sendPasswordResetEmail(auth, email)
-    }
+
 
 
     useEffect(() => {
@@ -78,7 +75,6 @@ const AuthProvider = ({ children }) => {
         updateUserProfile,
         googleSignIn,
         logOut,
-        resetPassword,
         loading,
     }
 

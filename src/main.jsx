@@ -14,7 +14,7 @@ const queryClient = new QueryClient()
 ReactDOM.createRoot(document.getElementById('root')).render(
   <AuthProvider>
     <QueryClientProvider client={queryClient}>
-      <div className="bg-slate-100 min-h-screen">
+      <div className="bg-slate-100 min-h-screen h-full pb-4">
         <RouterProvider router={router} />
       </div>
     </QueryClientProvider>
