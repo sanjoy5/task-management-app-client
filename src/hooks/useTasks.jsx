@@ -5,7 +5,7 @@ export const useTasks = () => {
     const { data: tasks = [], isLoading: loading, refetch } = useQuery({
         queryKey: ['tasks'],
         queryFn: async () => {
-            const res = await fetch('http://127.0.0.1:5000/tasks')
+            const res = await fetch('https://task-management-app-server-eight.vercel.app/tasks')
             return res.json()
         }
 

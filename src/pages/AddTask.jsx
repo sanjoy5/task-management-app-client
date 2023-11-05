@@ -26,7 +26,7 @@ const AddTask = () => {
 
             // normal way to post a data -------->
 
-            // fetch(`http://127.0.0.1:5000/add-task/${user.email}`, {
+            // fetch(`https://task-management-app-server-eight.vercel.app/add-task/${user.email}`, {
             //     method: 'POST',
             //     headers: {
             //         'content-type': 'application/json',

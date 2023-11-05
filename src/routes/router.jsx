@@ -27,7 +27,7 @@ export const router = createBrowserRouter([
             {
                 path: '/updatetask/:id',
                 element: <PrivateRoute><UpdateTask /></PrivateRoute>,
-                loader: ({ params }) => fetch(`http://127.0.0.1:5000/updatetask/${params.id}`)
+                loader: ({ params }) => fetch(`https://task-management-app-server-eight.vercel.app/updatetask/${params.id}`)
             },
         ]
     },

@@ -52,7 +52,7 @@ const AuthProvider = ({ children }) => {
             // 1st Task 
             // get and set Token 
             if (currentUser) {
-                axios.post('http://127.0.0.1:5000/jwt', { email: currentUser.email })
+                axios.post('https://task-management-app-server-eight.vercel.app/jwt', { email: currentUser.email })
                     .then(data => {
                         // console.log('Data::: ', data.data);
                         localStorage.setItem('access-token', data.data.token)
