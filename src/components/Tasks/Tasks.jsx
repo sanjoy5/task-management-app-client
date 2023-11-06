@@ -30,7 +30,7 @@ const Tasks = () => {
 
     useEffect(() => {
         if (user) {
-            fetch(`http://127.0.0.1:5000/mytasks/${user?.email}?sortdata=${sortOrder}`, {
+            fetch(`https://task-management-app-server-eight.vercel.app/mytasks/${user?.email}?sortdata=${sortOrder}`, {
                 headers: {
                     authorization: `Bearer ${token}`
                 }
@@ -49,6 +49,7 @@ const Tasks = () => {
     // For Search Result 
 
     const handleSearch = () => {
+
         if (searchText === '') {
             Swal.fire({
                 position: 'center-center',
@@ -59,7 +60,7 @@ const Tasks = () => {
             })
             return;
         }
-        fetch(`http://127.0.0.1:5000/my-task-search/${searchText}?email=${user?.email}&sortOrder=${sortOrder}`, {
+        fetch(`https://task-management-app-server-eight.vercel.app/my-task-search/${searchText}?email=${user?.email}&sortOrder=${sortOrder}`, {
             headers: {
                 authorization: `Bearer ${token}`
             }
@@ -77,7 +78,7 @@ const Tasks = () => {
     // For show all data 
 
     const showAll = () => {
-        fetch(`http://127.0.0.1:5000/mytasks/${user?.email}?sortdata=${sortOrder}`)
+        fetch(`https://task-management-app-server-eight.vercel.app/mytasks/${user?.email}?sortdata=${sortOrder}`)
             .then(res => res.json())
             .then(data => {
                 setMyTasks(data);
@@ -102,7 +103,7 @@ const Tasks = () => {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                fetch(`http://127.0.0.1:5000/delete-task/${_id}`, {
+                fetch(`https://task-management-app-server-eight.vercel.app/delete-task/${_id}`, {
                     method: 'DELETE',
                     headers: {
                         authorization: `Bearer ${token}`
@@ -142,7 +143,7 @@ const Tasks = () => {
                     : <>
                         <div className="bg-white shadow p-8 rounded ">
 
-                            {loading ? <Loading /> :
+                            {user && loading ? <Loading /> :
                                 <>
                                     {
                                         myTasks?.length === 0 ?

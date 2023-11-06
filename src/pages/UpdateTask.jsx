@@ -24,7 +24,7 @@ const UpdateTask = () => {
     const onSubmit = data => {
         // console.log(data, 'updated data')
 
-        fetch(`http://127.0.0.1:5000/updatetask/${id}`, {
+        fetch(`https://task-management-app-server-eight.vercel.app/updatetask/${id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json',
